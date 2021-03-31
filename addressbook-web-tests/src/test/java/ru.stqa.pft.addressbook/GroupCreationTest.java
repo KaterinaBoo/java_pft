@@ -20,15 +20,19 @@ public class GroupCreationTest {
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
-    @Test
-    public void testGroupCreation() throws Exception {
+    private void login(GroupData groupData){
         driver.get("http://localhost:8090/addressbook/group.php?new=New+group");
         driver.findElement(By.name("user")).clear();
-        driver.findElement(By.name("user")).sendKeys("admin");
+        driver.findElement(By.name("user")).sendKeys(groupData.getUsername());
         driver.findElement(By.name("pass")).click();
         driver.findElement(By.name("pass")).clear();
-        driver.findElement(By.name("pass")).sendKeys("secret");
+        driver.findElement(By.name("pass")).sendKeys(groupData.getPassword());
         driver.findElement(By.xpath("//input[@value='Login']")).click();
+    }
+
+    @Test
+    public void testGroupCreation() throws Exception {
+        login(new GroupData("admin", "secret"));
         driver.findElement(By.linkText("groups")).click();
         driver.findElement(By.name("new")).click();
         driver.findElement(By.name("group_name")).click();
