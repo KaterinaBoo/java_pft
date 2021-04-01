@@ -24,7 +24,7 @@ public class GroupCreationTest {
         driver.get("http://localhost:8090/addressbook/group.php?new=New+group");
         driver.findElement(By.name("user")).clear();
         driver.findElement(By.name("user")).sendKeys(groupData.getUsername());
-        driver.findElement(By.name("pass")).click();
+        initGroupCreation("pass");
         driver.findElement(By.name("pass")).clear();
         driver.findElement(By.name("pass")).sendKeys(groupData.getPassword());
         driver.findElement(By.xpath("//input[@value='Login']")).click();
@@ -33,18 +33,30 @@ public class GroupCreationTest {
     @Test
     public void testGroupCreation() throws Exception {
         login(new GroupData("admin", "secret"));
-        driver.findElement(By.linkText("groups")).click();
-        driver.findElement(By.name("new")).click();
-        driver.findElement(By.name("group_name")).click();
+        goToGroupPage("groups");
+        initGroupCreation("new");
+        initGroupCreation("group_name");
+        fillGroupForm();
+        initGroupCreation("submit");
+        goToGroupPage("groups");
+        goToGroupPage("Logout");
+    }
+
+    private void fillGroupForm() {
         driver.findElement(By.name("group_name")).clear();
         driver.findElement(By.name("group_name")).sendKeys("test1");
         driver.findElement(By.name("group_header")).clear();
         driver.findElement(By.name("group_header")).sendKeys("test2");
         driver.findElement(By.name("group_footer")).clear();
         driver.findElement(By.name("group_footer")).sendKeys("test3");
-        driver.findElement(By.name("submit")).click();
-        driver.findElement(By.linkText("groups")).click();
-        driver.findElement(By.linkText("Logout")).click();
+    }
+
+    private void initGroupCreation(String s) {
+        driver.findElement(By.name(s)).click();
+    }
+
+    private void goToGroupPage(String groups) {
+        driver.findElement(By.linkText(groups)).click();
     }
 
     @AfterMethod(alwaysRun = true)
