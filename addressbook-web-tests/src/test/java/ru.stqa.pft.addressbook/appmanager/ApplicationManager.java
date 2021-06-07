@@ -15,12 +15,14 @@ public class ApplicationManager {
     private SessionHelper sessionHelper;
     private NavigationHelper navigationHelper;
     private GroupHelper groupHelper;
+    private ContactHelper contactHelper;
 
     public void init() {
         System.setProperty("webdriver.chrome.driver", "C:\\Selenium\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get("http://localhost:8090/addressbook/group.php?new=New+group");
+        contactHelper = new ContactHelper(driver);
         groupHelper = new GroupHelper(driver);
         navigationHelper = new NavigationHelper(driver);
         sessionHelper = new SessionHelper(driver);
@@ -58,5 +60,11 @@ public class ApplicationManager {
 
     public NavigationHelper getNavigationHelper() {
         return navigationHelper;
+    }
+
+    public ContactHelper getContactHelper() { return contactHelper;}
+
+    public SessionHelper getSessionHelper() {
+        return sessionHelper;
     }
 }

@@ -10,7 +10,7 @@ public class NavigationHelper {
         this.driver = driver;
     }
 
-    public void goToGroupPage() {
-        driver.findElement(By.linkText("groups")).click();
+    public void goToPage(String s) {
+        driver.findElement(By.linkText(s)).click();
     }
 }

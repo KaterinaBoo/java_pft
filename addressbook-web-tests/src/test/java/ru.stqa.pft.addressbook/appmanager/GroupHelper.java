@@ -30,4 +30,12 @@ public class GroupHelper extends HelperBase {
     public void selectGroup() {
       driver.findElement(By.name("selected[]")).click();
     }
+
+    public void initGroupModification() {
+        click("edit");
+    }
+
+    public void submitGroupModification() {
+        click("update");
+    }
 }
