@@ -29,8 +29,24 @@ public class ContactHelper extends HelperBase {
         driver.findElement(By.name("title")).sendKeys(contactData.getTitle());
     }
 
+    public void selectContact() {
+        driver.findElement(By.name("selected[]")).click();
+    }
+
+    public void deleteSelectedContact() {
+        driver.findElement(By.xpath("//*[@id=\"content\"]/form[2]/div[2]/input")).click();
+    }
+
+    public void initContactModification() {
+        driver.findElement(By.xpath("//*[@id=\"maintable\"]/tbody/tr[2]/td[8]/a/img")).click();
+    }
+
     public void submitContactCreation(String s) {
         driver.findElement(By.xpath(s)).click();
+    }
+
+    public void submitContactModification() {
+        click("update");
     }
 
     private boolean isElementPresent(By by) {
