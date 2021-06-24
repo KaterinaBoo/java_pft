@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 
 public class ContactHelper extends HelperBase {
@@ -11,7 +13,7 @@ public class ContactHelper extends HelperBase {
         super(driver);
     }
 
-    public void fillContactForm(ContactData contactData) throws InterruptedException {
+    public void fillContactForm(ContactData contactData, boolean creation) throws InterruptedException {
         driver.findElement(By.name("firstname")).click();
         driver.findElement(By.name("firstname")).clear();
         driver.findElement(By.name("firstname")).sendKeys(contactData.getFirstname());
@@ -27,6 +29,12 @@ public class ContactHelper extends HelperBase {
         driver.findElement(By.name("title")).click();
         driver.findElement(By.name("title")).clear();
         driver.findElement(By.name("title")).sendKeys(contactData.getTitle());
+
+        if (creation) {
+            new Select(driver.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+        } else {
+            Assert.assertFalse(isElementPresent(By.name("new_group")));
+        }
     }
 
     public void selectContact() {
@@ -47,15 +55,6 @@ public class ContactHelper extends HelperBase {
 
     public void submitContactModification() {
         click("update");
-    }
-
-    private boolean isElementPresent(By by) {
-        try {
-            driver.findElement(by);
-            return true;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
     }
 
     private boolean isAlertPresent() {
