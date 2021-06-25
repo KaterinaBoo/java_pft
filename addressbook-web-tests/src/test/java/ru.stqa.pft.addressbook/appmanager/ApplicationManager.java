@@ -37,7 +37,7 @@ public class ApplicationManager {
             System.setProperty("webdriver.ie.driver", "C:\\Selenium\\IEDriverServer.exe");
         }
 
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("http://localhost:8090/addressbook/group.php?new=New+group");
         contactHelper = new ContactHelper(driver);
         groupHelper = new GroupHelper(driver);

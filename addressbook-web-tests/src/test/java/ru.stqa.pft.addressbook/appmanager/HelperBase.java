@@ -1,7 +1,6 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
@@ -17,6 +16,7 @@ public class HelperBase {
         if (text != null) {
             String existingText = driver.findElement(locator).getAttribute("value");
             if (! text.equals(existingText)) {
+                driver.findElement(locator).click();
                 driver.findElement(locator).clear();
                 driver.findElement(locator).sendKeys(text);
             }
@@ -24,7 +24,7 @@ public class HelperBase {
     }
 
     protected void click(String name) {
-        driver.findElement(By.name(name)).click();
+        driver.findElement(By.name(String.valueOf(name))).click();
     }
 
     protected boolean isElementPresent(By by) {
